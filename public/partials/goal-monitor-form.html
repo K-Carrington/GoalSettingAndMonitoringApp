@@ -17,7 +17,7 @@
       </div>
       <div class="col-md-7 col-sm-6">
         <h2>{{main.user.name}}</h2>
-        <div ng-repeat="goal in main.user.goals | reverse" class="jumbotron user-monitor">
+        <div ng-repeat="goal in main.user.goals | orderBy: 'priority'" class="jumbotron user-monitor">
           <p class="list-group-item-text">Goal Category: {{ goal.parent_categories_heirachy }}</p>
           <p class="list-group-item-text">Goal: {{ goal.goal_or_task }}</p>
           <p ng-if="goal.priority" class="list-group-item-text">Priority: {{ goal.priority }}</p>
