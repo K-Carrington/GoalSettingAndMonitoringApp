@@ -229,11 +229,10 @@ apiRouter.route('/users/:user_id')
 apiRouter.get('/me', function(req, res) {
 	// Get user via req.decoded.user_id
 	User.findOne({ _id: req.decoded.user_id})
-	  .populate('goals')
+	  .populate('goals') //populate user with goals
 	  .exec(function (err, user) {
         if (err) {res.send(err);}
         else {
-          console.log('in me route, Populated user with goals', user);
           res.json(user);
         }
       })
@@ -247,11 +246,10 @@ apiRouter.get('/me', function(req, res) {
 apiRouter.route('/goals/users/:user_id')
 	.get(function(req,res){
 		User.findOne({ _id: req.params.user_id})
-		  .populate('goals')
+		  .populate('goals')  //populate user with goals
 		  .exec(function (err, user) {
           if (err) {res.send(err);}
           else {
-            console.log('Populated user with goals', user);
             res.json(user.goals);
           }
         })
@@ -305,10 +303,9 @@ apiRouter.route('/goals/users/:user_id')
 apiRouter.route('/goals/:id')
 	.get(function(req,res){ 
 	  Goal.findOne({ _id: req.params.id })
-        .populate('user_id')
+        .populate('user_id')  //populate goal with a user
         .exec(function (err, goal) {
         if (err) {res.send(err);}
-        //console.log('Populated goal with user %s', goal.user_id.name);
 		else {
 			res.json(goal)
 		}
@@ -324,7 +321,6 @@ apiRouter.route('/goals/:id')
 	})
 	.delete(function(req,res){
 	  //delete from user.goals
-	  console.log("params", req.params);
       Goal.findById( req.params.id, function(err, goal) {
 	    if (err) {
 	      console.log("ERROR findng goal, err = "+err)
@@ -334,7 +330,6 @@ apiRouter.route('/goals/:id')
           console.log("ERROR: cannot delete null goal")
 		  res.send("ERROR: cannot delete null goal")
 	    }else{
-	      console.log("looking for user that goal = "+goal+" belongs to ")
           User.findById(goal.user_id, function(err, user) {
 		    if (err) {
 		    	console.log("ERROR finding user, err = "+err)
@@ -358,7 +353,7 @@ apiRouter.route('/goals/:id')
 		          //delete from goal collection
 		  	      Goal.findOneAndRemove({_id: req.params.id}, req.body, function(err,goal){
 			        if(err) throw err
-			        res.json({message:"goal deleted!"})
+			        res.json({message:"goal deleted from goal collection!"})
 		          })
 		        }
 	          });
@@ -367,16 +362,5 @@ apiRouter.route('/goals/:id')
 		}
       });
 	})
-
-//TBD probably won't need
-/* db.users.update({"_id": ObjectId("566f35206eb17518050f7ebe")}, {$set: {"goals": []}})
-apiRouter.get('/users/:user_id/destroy-all-goals', function(req,res){
-	//TBD remove all goals for given user
-	Goal.remove({}, function(err){
-		if(err) throw err
-		res.json({message: 'All user\'s goals destroyed!'})
-	})
-})
-*/
 
 module.exports = apiRouter
