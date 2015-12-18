@@ -15,11 +15,11 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="mainController as h">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="mainController as main">
       <ul class="nav navbar-nav navbar-left">
         <li>
           <a id="unloggedSignUp" type="button" class="btn btn-block btn-primary" href="/#/signup">Sign Up</a>
-          <a id="loggedName" style="display:none" type="button" class="btn btn-block btn-primary" href="/#/profile" ng-model="h.username"></a>
+          <a id="loggedName" style="display:none" type="button" class="btn btn-block btn-primary" href="/#/profile" ng-model="main.username"></a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -42,8 +42,8 @@
           </ul>
         </li> -->
 
-        <li ng-if="!h.loggedIn"><a  href="#/login">Login</a> </li>
-        <li ng-if="h.loggedIn" ng-click="h.doLogout()"><a  href="#/logout">Logout</a> </li>
+        <li ng-if="!main.loggedIn"><a  href="#/login">Login</a> </li>
+        <li ng-if="main.loggedIn" ng-click="main.doLogout()"><a  href="#/logout">Logout</a> </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
