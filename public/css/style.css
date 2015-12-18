@@ -202,17 +202,22 @@ nav {
 }
 
 /*sign up*/
+
 .sign-up-form{
-  background: #e04700;
   color: #fff;
   padding-top: 80px;
   margin-bottom: 10px;
-  width: auto;
 }
-.sign-up-container{
+.signUpFormBox {
+  background: #e04700;
   margin: 0 auto;
+  padding: 30px;
+  width: 460px;
 }
-
+.signUpFormBox h1 {
+  margin-top: 0;
+  padding-top: 0;
+}
 
 
 /*modal*/
