@@ -1,6 +1,5 @@
 angular.module('mainCtrl', [])
   .controller('mainController', function($rootScope, $location, auth){
-
     var mainCtrl = this;
     mainCtrl.l = "Hello"
 

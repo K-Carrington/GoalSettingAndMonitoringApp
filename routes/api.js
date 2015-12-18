@@ -303,7 +303,7 @@ apiRouter.route('/goals/users/:user_id')
 //Read one, Update one and Delete one
 
 apiRouter.route('/goals/:id')
-	.get(function(req,res){ 
+	.get(function(req,res){
 	  Goal.findOne({ _id: req.params.id })
         .populate('user_id')
         .exec(function (err, goal) {

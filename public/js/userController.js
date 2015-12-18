@@ -77,8 +77,10 @@ angular.module('userCtrl', ['userService'])
 				vm.processing = false;
 				vm.userData = {};
 				vm.message = data.message;
-			console.log('yes! created======');
-			window.location = '/#/profile'
+
+			console.log( data );
+
+			window.location = '/#/login'
 			});
 
 	};
