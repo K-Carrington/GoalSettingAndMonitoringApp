@@ -15,12 +15,6 @@
           controller : 'userCreateController',
           controllerAs : 'userCreateCtrl'
         })
-        // home page w/o logging in
-        .when('/home', {
-          templateUrl : 'partials/home.html',
-          controller : 'userController',
-          controllerAs : 'userCtrl'
-        })
         // login page
         .when('/login', {
           templateUrl : 'partials/login.html',
@@ -37,6 +31,12 @@
         //
         // Goals:
         //
+        // home page w/o logging in
+        .when('/home', {
+          templateUrl : 'partials/home.html',
+          controller : 'goalsController',
+          controllerAs : 'goalsCtrl'
+        })
         // profile page when logged in
         // goal and goal-monitoring display
         .when('/profile', {

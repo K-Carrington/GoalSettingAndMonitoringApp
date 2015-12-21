@@ -11,7 +11,7 @@
       <div class="col-md-3 col-sm-3">
         <div class="side-bar">
           <div class="side-bar-content hidden-xs content-links">
-            <h3><a href="/#/home">All Users' Goals</a></h3>
+            <h3><a href="/#/home">Home</a></h3>
             <h3><a href="/#/monitor">Monitor Goals</a></h3>
             <h3><a href="/#/addgoal">Add Goal</a></h3>
           </div>
@@ -28,7 +28,7 @@
             <p class="list-group-item-text">Date Created: {{ goal.date_created }}</p>
             <p ng-if="goal.priority" class="list-group-item-text">Priority: {{ goal.priority }}</p>
             <p ng-if="goal.zen_level" class="list-group-item-text">Zen Level: {{ goal.zen_level }}
-            <small ng-if="goal.zen_level==1">(maintenance activity, do periodically indefinitly)</small>
+            <small ng-if="goal.zen_level==1">(maintenance activity, do periodically indefinitely)</small>
             <small ng-if="goal.zen_level==2">(repeat a few times only, then finished)</small>
             <small ng-if="goal.zen_level==3">(achieve only one time for now)</small></p>
             <p ng-if="goal.optional_due_date" class="list-group-item-text">Due Date: {{ goal.optional_due_date }}</p>
@@ -38,9 +38,10 @@
               <button type="button" class="btn-monitor btn-block btn-primary" ng-click="goalsCtrl.editGoal(goal._id)">Edit Goal</button>
               <button class="btn-monitor btn-block btn-primary" ng-click="goalsCtrl.removeGoal(goal._id, main.user)">Delete Goal</button>
             </div>
+
             <div>
               <p class="list-group-item-text" ng-repeat="monitor in goal.monitoring">Dates Monitored:
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalDiv" ng-click="goalsCtrl.selectMonitor(monitor)">{{monitor.m_date}}</button>
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalDiv" ng-click="goalsCtrl.selectMonitor(goal.goal_or_task, monitor)">{{monitor.m_date}}</button>
 
                 <!-- Modal -->
                   <div class="modal fade" id="modalDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -48,7 +49,7 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h3 class="modal-title" id="myModalLabel">Your Selected Monitor for {{goal.parent_categories_heirachy}}</h3>
+                          <h3 class="modal-title" id="myModalLabel">Your Selected Monitor for {{goalsCtrl.selectedMonitor.goal}}</h3>
                         </div>
                         <div class="modal-body">
                           <h4>Monitor Date: {{ goalsCtrl.selectedMonitor.m_date }}</h4>

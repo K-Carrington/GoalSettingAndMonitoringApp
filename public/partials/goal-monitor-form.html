@@ -22,11 +22,12 @@
           <p class="list-group-item-text">Goal: {{ goal.goal_or_task }}</p>
           <p ng-if="goal.priority" class="list-group-item-text">Priority: {{ goal.priority }}</p>
           <p ng-if="goal.zen_level" class="list-group-item-text">Zen Level: {{ goal.zen_level }}
-          <small ng-if="goal.zen_level==1">(maintenance activity, do periodically indefinitly)</small>
+          <small ng-if="goal.zen_level==1">(maintenance activity, do periodically indefinitely)</small>
           <small ng-if="goal.zen_level==2">(repeat a few times only, then finished)</small>
           <small ng-if="goal.zen_level==3">(achieve only one time for now)</small></p>
           <p ng-if="goal.optional_due_date" class="list-group-item-text">Due Date: {{ goal.optional_due_date }}</p>
           <p ng-if="goal.completed" class="list-group-item-text">Completed: {{ goal.completed }}</p>
+          <p class="list-group-item-text">Last Monitored: {{goal.monitoring[goal.monitoring.length-1].m_date || "not yet"}}
       
           <form ng-submit="goalsCtrl.updateStatus(goal)">
             <div class="form-group">
