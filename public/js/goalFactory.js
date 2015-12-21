@@ -12,6 +12,11 @@
 		var goalsUrl = '/api/goals'
 		var goals = {}
 
+		goals.list_all = function() {
+			console.log("calling http.get all goals")
+			return $http.get(goalsUrl)
+		}
+
         // list all for given user
 		goals.list = function(user_id) {
 			return $http.get(goalsUrl + '/users/' + user_id )

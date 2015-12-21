@@ -17,9 +17,11 @@
 		self.showModal = false;
 
 		self.selectedMonitor = {};
-		self.selectMonitor = function(monitor){
-			console.log("In selectMonitor " + monitor)
+		self.selectMonitor = function(goal, monitor){
+			//console.log("In selectMonitor " + monitor)
 			self.selectedMonitor = monitor
+			self.selectedMonitor.goal = goal
+			//console.log(self.selectedMonitor)
 		}
 
 		// self.toggleModal = function(){
@@ -32,6 +34,9 @@
 
 		// for full list user's of goals from DB
 		self.goals = []
+
+		// all goals in the system
+		self.all_goals = []
 
 		// for a new goal to POST
 		self.newGoal = {}
@@ -50,6 +55,11 @@
 		  	self.goals = response.data
 		  })
 		}
+
+	    self.api.list_all().success(function(response){  //call factory function
+		  self.all_goals = response  //not in .data for some reason...
+		})
+
 
 		// controller method for adding a new goal, invoked when user hits submit
 		//self.addGoal = function(parent_categories_heirachy, goal_or_task, date_created,
@@ -75,6 +85,7 @@
 		// default boolean value, which we can toggle true/false for showing/hiding the goal edit form
 		self.editing = false
 
+        // Set up goal editing UI:
 		// retrieve a goal via the url parameter for goalId, then set this controller's goal property
 		// to the response in order to to show it on the front-end
 		self.editGoal = function(goalId){
@@ -91,7 +102,7 @@
 				self.goal = response
 			})
 		}
-		self.showGoal($routeParams.goalId)
+		//self.showGoal($routeParams.goalId)
 
 		// update the goal, on successful PATCH, set the goal object to the response from the server,
 		// which updates the front-end, then turn the editing property to false, which toggles back to
@@ -120,6 +131,7 @@
 				self.goal = response
 				self.editing = false
 				alert("Monitoring added for " + response.monitoring[response.monitoring.length-1].m_date);
+				location.reload();
 			})
 		}
 

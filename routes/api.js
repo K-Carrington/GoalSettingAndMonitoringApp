@@ -130,6 +130,24 @@ apiRouter.route('/users')
 		})
 	})
 
+// Get all goals in the system
+apiRouter.route('/goals')
+	.get(function(req,res){
+		console.log("***getting all goals in the system")
+	  Goal.find({ }) 
+        .populate('user_id')  //populate goal with a user
+        .exec(function (err, goals) {
+
+        if (err) {
+        	console.log("ERROR getting all goals");
+        	res.send(err);}
+		else {
+			console.log("**Got all goals!");
+			res.json(goals)
+		}
+	  });
+	})
+
 
 // ---------------------------api routes to login a user ---------------------------------------------
 ////**All routes above this do not require a token to get access**
@@ -242,8 +260,9 @@ apiRouter.get('/me', function(req, res) {
 // ----------------------------------------------------------------------------------------------------
 // ---------------------------api routes for a users goals --------------------------------------------
 //Read all and Create one (Also use this for cycling through all users)
-//TBD In Angular get user id from token
-apiRouter.route('/goals/users/:user_id')
+
+
+apiRouter.route('/goals/users/:user_id') // In Angular user id is from token
 	.get(function(req,res){
 		User.findOne({ _id: req.params.user_id})
 		  .populate('goals')  //populate user with goals
@@ -298,8 +317,9 @@ apiRouter.route('/goals/users/:user_id')
 	})
 
 // ---------------------------api routes for individual goals -----------------------------------------
+// This technically doesn't require a logged in user, but it's down here because it's
+//    only used when a user is logged in.
 //Read one, Update one and Delete one
-
 apiRouter.route('/goals/:id')
 	.get(function(req,res){
 	  Goal.findOne({ _id: req.params.id })

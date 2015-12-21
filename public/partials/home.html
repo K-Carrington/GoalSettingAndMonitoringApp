@@ -14,20 +14,20 @@
               <!-- <h3><a href="/#/d3_monitor">d3</a></h3> -->
             </div>
           </div>
-          <p class="welcome-backdrop">Welcome to Goals App! This is where you can create and monitor your goals (for exercise, study or whatever). This is supposed to help you focus more on higher yield activities. For exercising the mind and body it's good to vary activity, get enough rest and water... Also for learning, a moderate amount of physical exercise goes along great. Also it's good have a healthy balanced life where one thing doesn’t dominate, the goals don't conflict with each other and instead they compliment each other.
+          <p class="welcome-backdrop">Welcome to Goals App! This is where you can create and monitor your goals (for exercise, study or whatever). This is to help you focus more on higher yield activities. For exercising the mind and body it's good to vary activity, get enough rest and water... Also for learning, a moderate amount of physical exercise goes along great. Also it's good have a healthy balanced life where one thing doesn’t dominate, the goals don't conflict with each other and instead they compliment each other.
           </p>
         </div>
       </div>
       <div class="col-md-6 col-sm-5">
-        <div class="goalContent" ng-repeat="user in userCtrl.users | reverse">
-          <h3 class="list-group-item-heading">Goals for {{ user.name }}:</h3>
-          <div ng-repeat="goal in user.goals| reverse" class="list-group-item goal-content-border-home">
+        <div class="goalContent" >
+          <div ng-repeat="goal in goalsCtrl.all_goals | reverse" class="list-group-item goal-content-border-home">
+            <h4 class="list-group-item-heading">Goal for {{ goal.user_id.name }}:</h4> 
             <p class="list-group-item-text">Goal Category: {{ goal.parent_categories_heirachy }}</p>
             <p class="list-group-item-text">Goal: {{ goal.goal_or_task }}</p>
             <p class="list-group-item-text">Date Created: {{ goal.date_created }}</p>
             <p ng-if="goal.priority" class="list-group-item-text">Priority: {{ goal.priority }}</p>
             <p ng-if="goal.zen_level" class="list-group-item-text">Zen Level: {{ goal.zen_level }}
-            <small ng-if="goal.zen_level==1">(maintenance activity, do periodically indefinitly)</small>
+            <small ng-if="goal.zen_level==1">(maintenance activity, do periodically indefinitely)</small>
             <small ng-if="goal.zen_level==2">(repeat a few times only, then finished)</small>
             <small ng-if="goal.zen_level==3">(achieve only one time for now)</small></p>
             <p ng-if="goal.optional_due_date" class="list-group-item-text">Due Date: {{ goal.optional_due_date }}</p>
