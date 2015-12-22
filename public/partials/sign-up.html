@@ -6,15 +6,15 @@
         <form ng-submit="userCreateCtrl.saveUser()">
       			<div class="form-group">
     				<label>Name</label>
-    				<input type="text" class="form-control" ng-model="userCreateCtrl.name">
+    				<input type="text" class="form-control" ng-model="userCreateCtrl.name" required>
     			</div>
     			<div class="form-group">
     				<label>User Name</label>
-    				<input type="text" class="form-control" ng-model="userCreateCtrl.username">
+    				<input type="text" class="form-control" ng-model="userCreateCtrl.username" required>
     			</div>
     			<div class="form-group">
     				<label>Password</label>
-    				<input type="password" class="form-control" ng-model="userCreateCtrl.password">
+    				<input type="password" class="form-control" ng-model="userCreateCtrl.password" required>
     			</div>
           <button type="submit" class="btn btn-block btn-primary btn-border">
     				<span>Submit</span>

@@ -19,19 +19,21 @@
         </div>
       </div>
       <div class="col-md-6 col-sm-5">
-        <div class="goalContent" >
-          <div ng-repeat="goal in goalsCtrl.all_goals | reverse" class="list-group-item goal-content-border-home">
-            <h4 class="list-group-item-heading">Goal for {{ goal.user_id.name }}:</h4> 
-            <p class="list-group-item-text">Goal Category: {{ goal.parent_categories_heirachy }}</p>
-            <p class="list-group-item-text">Goal: {{ goal.goal_or_task }}</p>
-            <p class="list-group-item-text">Date Created: {{ goal.date_created }}</p>
-            <p ng-if="goal.priority" class="list-group-item-text">Priority: {{ goal.priority }}</p>
-            <p ng-if="goal.zen_level" class="list-group-item-text">Zen Level: {{ goal.zen_level }}
-            <small ng-if="goal.zen_level==1">(maintenance activity, do periodically indefinitely)</small>
-            <small ng-if="goal.zen_level==2">(repeat a few times only, then finished)</small>
-            <small ng-if="goal.zen_level==3">(achieve only one time for now)</small></p>
-            <p ng-if="goal.optional_due_date" class="list-group-item-text">Due Date: {{ goal.optional_due_date }}</p>
-            <p ng-if="goal.completed" class="list-group-item-text">Completed: {{ goal.completed }}</p>
+        <div class="goalContent">
+          <div ng-repeat="goal in goalsCtrl.all_goals | reverse" class="list-group-item goal-content-border-home" ng-if="goal.user_id.name">
+            <div g-if="goal.user_id.name">
+              <h4 class="list-group-item-heading">Goal for {{ goal.user_id.name }}:</h4> 
+              <p class="list-group-item-text">Goal Category: {{ goal.parent_categories_heirachy }}</p>
+              <p class="list-group-item-text">Goal: {{ goal.goal_or_task }}</p>
+              <p class="list-group-item-text">Date Created: {{ goal.date_created }}</p>
+              <p ng-if="goal.priority" class="list-group-item-text">Priority: {{ goal.priority }}</p>
+              <p ng-if="goal.zen_level" class="list-group-item-text">Zen Level: {{ goal.zen_level }}
+              <small ng-if="goal.zen_level==1">(maintenance activity, do periodically indefinitely)</small>
+              <small ng-if="goal.zen_level==2">(repeat a few times only, then finished)</small>
+              <small ng-if="goal.zen_level==3">(achieve only one time for now)</small></p>
+              <p ng-if="goal.optional_due_date" class="list-group-item-text">Due Date: {{ goal.optional_due_date }}</p>
+              <p ng-if="goal.completed" class="list-group-item-text">Completed: {{ goal.completed }}</p>
+            </div>
           </div>
         </div>
       </div>
