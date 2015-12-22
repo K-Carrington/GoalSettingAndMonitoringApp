@@ -17,9 +17,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="mainController as main">
       <ul class="nav navbar-nav navbar-left">
-        <li>
-          <a id="unloggedSignUp" type="button" class="btn btn-block btn-primary" href="/#/signup">Sign Up</a>
-          <a id="loggedName" style="display:none" type="button" class="btn btn-block btn-primary" href="/#/profile" ng-model="main.username"></a>
+        <li ng-if="!main.loggedIn">
+          <a class="loggedName" type="button" class="btn btn-block btn-primary" href="/#/signup">Sign Up</a>
+        </li>
+        <li ng-if="main.loggedIn">
+          <a class="loggedName" style="display:none" type="button" class="btn btn-block btn-primary" href="/#/profile" ng-model="main.username">{{main.username}}</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

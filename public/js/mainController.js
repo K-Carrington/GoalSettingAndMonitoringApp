@@ -31,11 +31,8 @@ angular.module('mainCtrl', [])
           mainCtrl.processing = false;
 
           if(data.success) {
-            document.getElementById( "loggedName" ).innerHTML = data.username
-            document.getElementById( "unloggedSignUp" ).style.display = "none"
-            document.getElementById( "loggedName" ).style.display = "block"
-
-            //  document.getElementById( "loggedName" ).innerHTML = data.username
+       //     document.getElementsByClassName( "loggedName" ).innerHTML = data.username
+            //document.getElementsByClassName( "loggedName" ).style.display = "block"
             $location.path('/profile');
           } else {
             mainCtrl.error = data.message;
