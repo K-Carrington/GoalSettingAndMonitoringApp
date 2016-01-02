@@ -227,3 +227,29 @@ nav {
 .modal-title{
   color: #e04700
 }
+
+/*chart*/
+#monitoring-chart* {
+  top-margin: 50px;
+}
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+/*
+.line { <in the js code now>
+  fill: none;
+  stroke: blue;
+  stroke-width: 1.5px;
+} */
+
+
+
