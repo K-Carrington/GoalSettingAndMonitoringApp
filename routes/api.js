@@ -148,6 +148,73 @@ apiRouter.route('/goals')
 	  });
 	})
 
+// ---------------------------api routes for individual goals -----------------------------------------
+// This technically doesn't require a logged in user, but it's
+//    only used when a user is logged in.
+//Read one, Update one and Delete one
+apiRouter.route('/goals/:id')
+	.get(function(req,res){
+	  Goal.findOne({ _id: req.params.id })
+        .populate('user_id')  //populate goal with a user
+        .exec(function (err, goal) {
+        if (err) {res.send(err);}
+		else {
+			res.json(goal)
+		}
+      });
+	})
+	.patch(function(req,res){
+		Goal.findOneAndUpdate({_id: req.params.id}, req.body, function(err,goal){
+			if(err) throw err
+			Goal.findById(req.params.id, function(err,updatedGoal){ //to return updated goal
+				res.json(updatedGoal)
+			})
+		})
+	})
+	.delete(function(req,res){
+	  //delete from user.goals
+      Goal.findById( req.params.id, function(err, goal) {
+	    if (err) {
+	      console.log("ERROR findng goal, err = "+err)
+	  	  res.send(err);
+	    }
+        else if (!goal){
+          console.log("ERROR: cannot delete null goal")
+		  res.send("ERROR: cannot delete null goal")
+	    }else{
+          User.findById(goal.user_id, function(err, user) {
+		    if (err) {
+		    	console.log("ERROR finding user, err = "+err)
+		    	res.send(err);
+		    }
+		    else {
+              console.log("found user to delete goal out of, len " + user.goals.length)
+              for (var i = 0; i < user.goals.length; i++) {
+        	    console.log("ids "+user.goals[i] +", "+ req.params.id)
+        	    if (user.goals[i] == req.params.id) { //*** not the same so only == ***
+                  user.goals.splice(i, 1);
+                  console.log("spliced out "+i+" indexed goal")
+                  continue;
+                }
+              }
+	          // save the goal deleted user
+	          user.save(function(err) {
+		        if (err) {res.send(err);}
+		        else {
+		          console.log("Deleted goal out of user array!")
+		          //delete from goal collection
+		  	      Goal.findOneAndRemove({_id: req.params.id}, req.body, function(err,goal){
+			        if(err) throw err
+			        res.json({message:"goal deleted from goal collection!"})
+		          })
+		        }
+	          });
+	        }
+	      });
+		}
+      });
+	})
+
 
 // ---------------------------api routes to login a user ---------------------------------------------
 ////**All routes above this do not require a token to get access**
@@ -264,6 +331,7 @@ apiRouter.get('/me', function(req, res) {
 
 apiRouter.route('/goals/users/:user_id') // In Angular user id is from token
 	.get(function(req,res){
+		console.log('Getting user '+req.params.user_id+'\'s goals')
 		User.findOne({ _id: req.params.user_id})
 		  .populate('goals')  //populate user with goals
 		  .exec(function (err, user) {
@@ -314,73 +382,6 @@ apiRouter.route('/goals/users/:user_id') // In Angular user id is from token
 			  });
             }
 		});
-	})
-
-// ---------------------------api routes for individual goals -----------------------------------------
-// This technically doesn't require a logged in user, but it's down here because it's
-//    only used when a user is logged in.
-//Read one, Update one and Delete one
-apiRouter.route('/goals/:id')
-	.get(function(req,res){
-	  Goal.findOne({ _id: req.params.id })
-        .populate('user_id')  //populate goal with a user
-        .exec(function (err, goal) {
-        if (err) {res.send(err);}
-		else {
-			res.json(goal)
-		}
-      });
-	})
-	.patch(function(req,res){
-		Goal.findOneAndUpdate({_id: req.params.id}, req.body, function(err,goal){
-			if(err) throw err
-			Goal.findById(req.params.id, function(err,updatedGoal){ //to return updated goal
-				res.json(updatedGoal)
-			})
-		})
-	})
-	.delete(function(req,res){
-	  //delete from user.goals
-      Goal.findById( req.params.id, function(err, goal) {
-	    if (err) {
-	      console.log("ERROR findng goal, err = "+err)
-	  	  res.send(err);
-	    }
-        else if (!goal){
-          console.log("ERROR: cannot delete null goal")
-		  res.send("ERROR: cannot delete null goal")
-	    }else{
-          User.findById(goal.user_id, function(err, user) {
-		    if (err) {
-		    	console.log("ERROR finding user, err = "+err)
-		    	res.send(err);
-		    }
-		    else {
-              console.log("found user to delete goal out of, len " + user.goals.length)
-              for (var i = 0; i < user.goals.length; i++) {
-        	    console.log("ids "+user.goals[i] +", "+ req.params.id)
-        	    if (user.goals[i] == req.params.id) { //*** not the same so only == ***
-                  user.goals.splice(i, 1);
-                  console.log("spliced out "+i+" indexed goal")
-                  continue;
-                }
-              }
-	          // save the goal deleted user
-	          user.save(function(err) {
-		        if (err) {res.send(err);}
-		        else {
-		          console.log("Deleted goal out of user array!")
-		          //delete from goal collection
-		  	      Goal.findOneAndRemove({_id: req.params.id}, req.body, function(err,goal){
-			        if(err) throw err
-			        res.json({message:"goal deleted from goal collection!"})
-		          })
-		        }
-	          });
-	        }
-	      });
-		}
-      });
 	})
 
 module.exports = apiRouter
