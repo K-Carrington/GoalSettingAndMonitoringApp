@@ -141,16 +141,16 @@
             //console.log("trimmed_date="+trimmed_date)
             d.m_date = parseDate(trimmed_date);
 
-            // add data progrssivly, divide quality and percieved result by 10
-            if (i === 0) {
-            	goal.monitoring[i].quality = goal.monitoring[i].quality/10;
-              goal.monitoring[i].percieved_result = goal.monitoring[i].percieved_result/10;
-            }
+            // add data progrssivly, scale quality and percieved result by 10*#hrs
+          	goal.monitoring[i].quality = (goal.monitoring[i].quality/10) 
+          	  * goal.monitoring[i].hours_devoted;
+            goal.monitoring[i].percieved_result = (goal.monitoring[i].percieved_result/10)
+              * goal.monitoring[i].hours_devoted;
 
             if (i > 0) {
               goal.monitoring[i].hours_devoted += goal.monitoring[i-1].hours_devoted;
-              goal.monitoring[i].quality += goal.monitoring[i-1].quality/10;
-              goal.monitoring[i].percieved_result += goal.monitoring[i-1].percieved_result/10;
+              goal.monitoring[i].quality += goal.monitoring[i-1].quality;
+              goal.monitoring[i].percieved_result += goal.monitoring[i-1].percieved_result;
             }
           });
 
