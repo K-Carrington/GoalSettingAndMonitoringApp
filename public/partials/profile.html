@@ -35,8 +35,10 @@
             <p ng-if="goal.optional_due_date" class="list-group-item-text">Due Date: {{ goal.optional_due_date }}</p>
             <p ng-if="goal.completed" class="list-group-item-text">Completed: {{ goal.completed }}</p>
 
-            <button type="button" class="btn-monitor btn-block btn-primary" ng-click="goalsCtrl.setGraph(goal._id)" ng-init="chart_id = 'monitoring-chart'+goal._id">Toggle Monitor Graph</button>
-            <div id={{chart_id}}></div>
+            <div ng-if="goal.monitoring.length > 1">
+              <button type="button" class="btn-monitor btn-block btn-primary" ng-click="goalsCtrl.setGraph(goal._id)" ng-init="chart_id = 'monitoring-chart'+goal._id">Toggle Monitor Graph</button>
+              <div id={{chart_id}}></div>
+            </div>
 
             <div ng-controller="goalsController as goalsCtrl">
               <button type="button" class="btn-monitor btn-block btn-primary" ng-click="goalsCtrl.editGoal(goal._id)">Edit Goal</button>
