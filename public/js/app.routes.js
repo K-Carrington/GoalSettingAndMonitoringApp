@@ -56,18 +56,18 @@
           controller : 'goalsController',
           controllerAs : 'goalsCtrl'
         })
-        // goal monitor form
-        .when('/monitor', {
-          templateUrl : 'partials/goal-monitor-form.html',
+        // monitor edit form
+        .when('/editstatus/:goalId/:statusIndex', {
+          templateUrl : 'partials/monitor-update.html',
           controller : 'goalsController',
           controllerAs : 'goalsCtrl'
         })
-        // d3
-        //.when('/d3_monitor', {
-        //  templateUrl : 'partials/d3_monitor.html',
-        //  controller : 'goalsController',
-        //  controllerAs : 'goalsCtrl'
-        //})
+        // goal monitor form
+        .when('/monitor', {
+          templateUrl : 'partials/monitor-add.html',
+          controller : 'goalsController',
+          controllerAs : 'goalsCtrl'
+        })
         // home page w/o logging in
         .otherwise({
           redirectTo: '/home'

@@ -46,10 +46,10 @@
             </div>
 
             <div>
-              <p class="list-group-item-text" ng-repeat="monitor in goal.monitoring">Dates Monitored:
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalDiv" ng-click="goalsCtrl.selectMonitor(goal.goal_or_task, monitor)">{{monitor.m_date}}</button>
+              <p class="list-group-item-text" ng-repeat="monitor in goal.monitoring track by $index">Monitor Point:
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalDiv" ng-click="goalsCtrl.selectMonitor(goal.goal_or_task, monitor)">{{$index +1}}: {{monitor.m_date}}</button>
 
-                <!-- Modal -->
+                <!-- Modal for a monitoring point -->
                   <div class="modal fade" id="modalDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -65,6 +65,9 @@
                           <h4>Comment: {{ goalsCtrl.selectedMonitor.comment }}</h4>
                         </div>
                         <div class="modal-footer">
+                          <!-- This Monitor Status'' edit button here -->
+                          <button type="button" class="btn-monitor btn-block btn-primary" ng-click="goalsCtrl.editStatus(goal._id, $index)">Edit Status</button>
+                        
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                       </div>
