@@ -4,6 +4,7 @@
 	angular.module('goals', [])
 		.directive('navBar', navBar)
 		.directive('goalForm', goalForm)
+		.directive('monitorForm', monitorForm)
 		.filter('reverse', reverse)
 
 	function reverse() {
@@ -20,6 +21,14 @@
 		var directive = {
 			restrict: 'E',
 			templateUrl: '/partials/add-update-goal-form.html'
+		}
+		return directive
+	}
+
+	function monitorForm(){
+		var directive = {
+			restrict: 'E',
+			templateUrl: '/partials/add-update-monitor-form.html'
 		}
 		return directive
 	}

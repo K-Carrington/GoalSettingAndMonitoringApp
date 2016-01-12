@@ -14,20 +14,6 @@
 
 	function goalsController(goals, $routeParams, $window, $location){
 		var self = this
-		self.showModal = false;
-
-		self.selectedMonitor = {};
-		self.selectMonitor = function(goal, monitor){
-			//console.log("In selectMonitor " + monitor)
-			self.selectedMonitor = monitor
-			self.selectedMonitor.goal = goal
-			//console.log(self.selectedMonitor)
-		}
-
-		// self.toggleModal = function(){
-		// 	console.log('show modal')
-		// 		self.showModal = !self.showModal;
-		// };
 
 		self.name = 'Goal List'
 		self.api = goals  //goals factory
@@ -59,8 +45,6 @@
 	    self.api.list_all().success(function(response){  //call factory function
 		  self.all_goals = response  //not in .data for some reason...
 		})
-
-        
 
 		// controller method for adding a new goal, invoked when user hits submit
 		//self.addGoal = function(parent_categories_heirachy, goal_or_task, date_created,
@@ -219,9 +203,6 @@
       }
     }
 
-
-		
-
         //******** THIS ONE CURRENTLY NOT USED *************
         self.setChart = function(goal_id) { // user_id ) {
 	      if (!self.d3_displayed) {
@@ -300,9 +281,11 @@
 		self.editGoal = function(goalId){
 			self.api.show(goalId).success(function(response){
 				self.goal = response
+				console.log("got goal to update:")
 				console.log( response )
 				$window.location = '#/editgoal/'+goalId
 				self.zen_level = response.zen_level
+				self.editing = true;
 			})
 		}
 
@@ -311,11 +294,10 @@
 				self.goal = response
 			})
 		}
-		//self.showGoal($routeParams.goalId)
+		self.showGoal($routeParams.goalId) //This is needed to be able to edit!
 
 		// update the goal, on successful PATCH, set the goal object to the response from the server,
-		// which updates the front-end, then turn the editing property to false, which toggles back to
-		// show the goal details without the edit form
+		// which updates the front-end
 		self.updateGoal = function() {
 			// set a high priority if completed so as to sort lower
 			if (self.goal.completed) self.goal.priority = 11;
@@ -330,17 +312,58 @@
 		  })
 		}
 
-        self.newMon = {}
+		self.newMon = {};
 
-		self.updateStatus = function(goal) {
-            goal.monitoring.push(self.newMon)
-            self.newMon = {} //clear out values for next one
+		self.addStatus = function(goal) {
+      goal.monitoring.push(self.newMon) //set in add-update-monitor-form.html
+
+      self.newMon = {} //clear out values for next one
 
 			self.api.updateGoal(goal).success(function(response){
 				self.goal = response
 				self.editing = false
 				alert("Monitoring added for " + response.monitoring[response.monitoring.length-1].m_date);
 				location.reload();
+			})
+		}
+
+		self.showModal = false;
+		self.selectedMonitor = {};
+		self.selectMonitor = function(goal, monitor){	
+			//self.newMon = JSON.parse(JSON.stringify(monitor));
+			self.selectedMonitor = monitor;
+			self.selectedMonitor.goal = goal.goal_or_task;
+			self.goal = goal;
+		}
+
+		self.showStatus = function(goalId, statusIndex){
+			self.api.show(goalId).success(function(response){
+				self.goal = response;
+				if (statusIndex !== undefined)
+			    self.newMon = self.goal.monitoring[statusIndex];
+			})
+		}
+		self.showStatus($routeParams.goalId, $routeParams.statusIndex) //This is needed to be able to edit!
+
+    // update the monitoring, on successful PATCH, set the goal object to the response from the server,
+		// which updates the front-end
+		self.editStatus = function(goalId, statusIndex){
+			self.api.show(goalId).success(function(response){
+				self.goal = response
+				$window.location = '#/editstatus/'+goalId +'/'+statusIndex;
+			})
+		}
+
+		self.updateStatus = function(goal) {
+      goal.monitoring[$routeParams.statusIndex] = self.newMon; //don't clear newMon after this incase there's more editing
+
+			self.api.updateGoal(goal).success(function(response){
+				self.goal = response
+				self.editing = false
+				alert("Monitoring updated for " 
+					+ response.monitoring[$routeParams.statusIndex].m_date);
+				$window.location = '/#/profile'
+				//location.reload();
 			})
 		}
 

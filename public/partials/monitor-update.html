@@ -1,0 +1,12 @@
+<div class="container" ng-if="main.loggedIn">
+  <div class="row">
+    <div class="col-sm-12 goal-add-user-color">
+    	<br><br>
+      <h2 class="text-center">Update monitor status for: {{goalsCtrl.newMon.m_date}}</h2>
+      <h3 class="text-center">(Goal: {{goalsCtrl.goal.goal_or_task}})</h3>
+      <form ng-submit="goalsCtrl.updateStatus(goalsCtrl.goal)">
+        <monitor-form>Update Goal</monitor-form>
+    	</form>
+    </div>
+  </div>
+</div>

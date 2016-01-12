@@ -29,26 +29,10 @@
           <p ng-if="goal.completed" class="list-group-item-text">Completed: {{ goal.completed }}</p>
           <p class="list-group-item-text">Last Monitored: {{goal.monitoring[goal.monitoring.length-1].m_date || "not yet"}}
       
-          <form ng-submit="goalsCtrl.updateStatus(goal)">
-            <div class="form-group">
-              <label>Hours devoted since last monitoring</label>
-              <input type="number" class="form-control input-width" placeholder="Hours:" ng-model="goalsCtrl.newMon.hours_devoted" min="1">
-            </div>
-            <div class="form-group">
-              <label>Quality of activity rating (1=low, 10=high)</label>
-              <input type="number" class="form-control input-width" placeholder="1 - 10:" ng-model="goalsCtrl.newMon.quality" min="1" max="10">
-            </div>
-            <div class="form-group">
-              <label>Perceived Result (1=low, 10=high)</label>
-              <input type="number" class="form-control input-width" placeholder="1 - 10:" ng-model="goalsCtrl.newMon.percieved_result" min="1" max="10">
-            </div>
-            <div class="form-group">
-              <label>Comment</label>
-              <input type="text" class="form-control" placeholder="Comment:" ng-model="goalsCtrl.newMon.comment">
-            </div>
-          <button type="submit" class="btn-monitor btn-block btn-primary">Submit</button>
+          <form ng-submit="goalsCtrl.addStatus(goal)">
+            <monitor-form>Add Monitor Status</monitor-form>
           </form>
-        </div>
+      </div>
     </div>
   </div>
 </div>
