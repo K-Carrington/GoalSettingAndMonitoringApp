@@ -44,39 +44,39 @@
               <button type="button" class="btn-monitor btn-block btn-primary" ng-click="goalsCtrl.editGoal(goal._id)">Edit Goal</button>
               <button class="btn-monitor btn-block btn-primary" ng-click="goalsCtrl.removeGoal(goal._id, main.user)">Delete Goal</button>
             </div>
+            
+              <div>
+                <p class="list-group-item-text" ng-repeat="monitor in goal.monitoring track by $index">Monitor Point:
+                  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalDiv" ng-click="goalsCtrl.selectMonitor(goal, monitor)">{{$index +1}}: {{monitor.m_date}}</button>
+                  <!-- This Monitor Status edit button -->
+                  <button type="button" class="btn-monitor btn-block btn-primary" ng-click="goalsCtrl.editStatus(goal._id, $index)">Edit Status</button>
 
-            <div>
-              <p class="list-group-item-text" ng-repeat="monitor in goal.monitoring track by $index">Monitor Point:
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalDiv" ng-click="goalsCtrl.selectMonitor(goal.goal_or_task, monitor)">{{$index +1}}: {{monitor.m_date}}</button>
-
-                <!-- Modal for a monitoring point -->
-                  <div class="modal fade" id="modalDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h3 class="modal-title" id="myModalLabel">Your Selected Monitor for {{goalsCtrl.selectedMonitor.goal}}</h3>
-                        </div>
-                        <div class="modal-body">
-                          <h4>Monitor Date: {{ goalsCtrl.selectedMonitor.m_date }}</h4>
-                          <h4>Hours Devoted: {{ goalsCtrl.selectedMonitor.hours_devoted }}</h4>
-                          <h4>Quality: {{ goalsCtrl.selectedMonitor.quality }}</h4>
-                          <h4>Perceived Result: {{ goalsCtrl.selectedMonitor.percieved_result }}</h4>
-                          <h4>Comment: {{ goalsCtrl.selectedMonitor.comment }}</h4>
-                        </div>
-                        <div class="modal-footer">
-                          <!-- This Monitor Status'' edit button here -->
-                          <button type="button" class="btn-monitor btn-block btn-primary" ng-click="goalsCtrl.editStatus(goal._id, $index)">Edit Status</button>
-                        
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <!-- Modal for a monitoring point -->
+                    <div class="modal fade" id="modalDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h3 class="modal-title" id="myModalLabel">Your Selected Monitor for {{goalsCtrl.selectedMonitor.goal}}</h3>
+                          </div>
+                          <div class="modal-body">
+                            <h4>Monitor Date: {{ goalsCtrl.selectedMonitor.m_date }}</h4>
+                            <h4>Hours Devoted: {{ goalsCtrl.selectedMonitor.hours_devoted }}</h4>
+                            <h4>Quality: {{ goalsCtrl.selectedMonitor.quality }}</h4>
+                            <h4>Perceived Result: {{ goalsCtrl.selectedMonitor.percieved_result }}</h4>
+                            <h4>Comment: {{ goalsCtrl.selectedMonitor.comment }}</h4>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                <!-- Modal end -->
-
-              </p>
-            </div>
+                  <!-- Modal end -->
+                
+                </p>
+              </div>
+            
           </div>
         </div>
       </div>

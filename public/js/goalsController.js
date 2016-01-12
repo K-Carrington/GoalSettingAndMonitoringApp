@@ -312,17 +312,8 @@
 		  })
 		}
 
-    self.newMon = {};
+		self.newMon = {};
 
-		self.showModal = false;
-		self.selectedMonitor = {};
-		self.selectMonitor = function(goal, monitor){
-			self.newMon = monitor;
-			self.selectedMonitor = monitor;
-			self.selectedMonitor.goal = goal;
-		}
-
-    
 		self.addStatus = function(goal) {
       goal.monitoring.push(self.newMon) //set in add-update-monitor-form.html
 
@@ -336,26 +327,34 @@
 			})
 		}
 
-        // update the monitoring, on successful PATCH, set the goal object to the response from the server,
+		self.showModal = false;
+		self.selectedMonitor = {};
+		self.selectMonitor = function(goal, monitor){	
+			//self.newMon = JSON.parse(JSON.stringify(monitor));
+			self.selectedMonitor = monitor;
+			self.selectedMonitor.goal = goal.goal_or_task;
+			self.goal = goal;
+		}
+
+		self.showStatus = function(goalId, statusIndex){
+			self.api.show(goalId).success(function(response){
+				self.goal = response;
+				if (statusIndex !== undefined)
+			    self.newMon = self.goal.monitoring[statusIndex];
+			})
+		}
+		self.showStatus($routeParams.goalId, $routeParams.statusIndex) //This is needed to be able to edit!
+
+    // update the monitoring, on successful PATCH, set the goal object to the response from the server,
 		// which updates the front-end
 		self.editStatus = function(goalId, statusIndex){
 			self.api.show(goalId).success(function(response){
 				self.goal = response
-				//self.newMon = self.goal.monitoring[statusIndex];
-				//console.log("statusIndex: " + statusIndex)
-				console.log("newMon:");
-				console.log(self.newMon);
 				$window.location = '#/editstatus/'+goalId +'/'+statusIndex;
 			})
 		}
 
 		self.updateStatus = function(goal) {
-			console.log("from routeParams:")
-			console.log($routeParams.goalId);
-			console.log($routeParams.statusIndex);
-            //goal.monitoring.push(self.newMon)
-            //TBD splice instead of push
-      console.log("route params statusIndex: "+$routeParams.statusIndex);
       goal.monitoring[$routeParams.statusIndex] = self.newMon; //don't clear newMon after this incase there's more editing
 
 			self.api.updateGoal(goal).success(function(response){
@@ -363,7 +362,8 @@
 				self.editing = false
 				alert("Monitoring updated for " 
 					+ response.monitoring[$routeParams.statusIndex].m_date);
-				location.reload();
+				$window.location = '/#/profile'
+				//location.reload();
 			})
 		}
 

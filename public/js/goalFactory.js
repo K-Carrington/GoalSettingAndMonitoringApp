@@ -31,7 +31,6 @@
 		}
 
 		goals.updateGoal = function(goal) {
-			console.log("updateGoal calling $http, goal id "+goal._id+" goal "); console.log(goal)
 			return $http.patch(goalsUrl + '/' + goal._id, goal)
 		}
 

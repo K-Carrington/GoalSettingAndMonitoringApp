@@ -1,7 +1,7 @@
 <div class="container" ng-if="main.loggedIn">
   <div class="row">
     <div class="col-sm-12 goal-add-user-color">
-      <h1 class="add-a-goal-header">Add A Goal</h1>
+      <br><br>
       <h2 class="text-center">Add a Goal for {{main.user.name}}</h2>
     	<form id="new-goal-form" ng-submit="goalsCtrl.addGoal(main.user._id)">
         <goal-form>Add A Goal</goal-form>
